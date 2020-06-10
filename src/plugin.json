@@ -1,0 +1,21 @@
+{
+  "type": "panel",
+  "name": "Leaflet Topology",
+  "id": "id-leaflet-topology",
+  "dataFormats": ["table"],
+  "info": {
+    "description": "Leaflet Path based Topology",
+    "author": {
+      "name": "Nam Le"
+    },
+    "keywords": ["leaflet", "path"],
+    "screenshots": [],
+    "version": "1.0.0",
+    "updated": "%TODAY%"
+  },
+
+  "dependencies": {
+    "grafanaVersion": "6.3.x",
+    "plugins": []
+  }
+}
