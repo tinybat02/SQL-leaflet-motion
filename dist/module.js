@@ -17973,7 +17973,7 @@ function (_super) {
             color: 'yellow'
           }, {
             auto: true,
-            duration: 500 * routeData.length,
+            duration: 50 * routeData.length,
             // @ts-ignore
             easing: leaflet__WEBPACK_IMPORTED_MODULE_2___default.a.Motion.Ease.linear
           }, {

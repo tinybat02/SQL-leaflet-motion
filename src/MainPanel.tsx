@@ -127,7 +127,7 @@ export class MainPanel extends PureComponent<Props> {
               },
               {
                 auto: true,
-                duration: 500 * routeData.length,
+                duration: 50 * routeData.length,
                 // @ts-ignore
                 easing: L.Motion.Ease.linear,
               },
