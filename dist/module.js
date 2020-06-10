@@ -17881,7 +17881,6 @@ function (_super) {
         zoom_level = _a.zoom_level,
         max_zoom = _a.max_zoom,
         tile_url = _a.tile_url;
-    var fields = this.props.data.series[0].fields;
     var openStreetMap = leaflet__WEBPACK_IMPORTED_MODULE_2___default.a.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       maxNativeZoom: 19,
@@ -17898,22 +17897,35 @@ function (_super) {
       this.map.addLayer(this.randomTile);
     }
 
-    if (fields[2].values.buffer.length !== 0) {
-      var _b = Object(_util_helpFunc__WEBPACK_IMPORTED_MODULE_5__["processReceivedData"])(this.props.data.series[0].length, fields),
-          perUserRoute = _b.perUserRoute,
-          perUserVendorName = _b.perUserVendorName;
+    if (this.props.data.series.length > 0) {
+      var fields = this.props.data.series[0].fields;
 
-      this.perUserRoute = perUserRoute;
-      this.perUserVendorName = perUserVendorName;
-      console.log('route', this.perUserRoute);
-      this.setState({
-        options: Object.keys(this.perUserRoute)
-      });
+      if (fields[2].values.buffer.length !== 0) {
+        var _b = Object(_util_helpFunc__WEBPACK_IMPORTED_MODULE_5__["processReceivedData"])(this.props.data.series[0].length, fields),
+            perUserRoute = _b.perUserRoute,
+            perUserVendorName = _b.perUserVendorName;
+
+        this.perUserRoute = perUserRoute;
+        this.perUserVendorName = perUserVendorName;
+        this.setState({
+          options: Object.keys(this.perUserRoute)
+        });
+      }
     }
   };
 
   MainPanel.prototype.componentDidUpdate = function (prevProps, prevState) {
     if (prevProps.data.series[0] !== this.props.data.series[0]) {
+      if (this.props.data.series.length == 0) {
+        this.route && this.map.removeLayer(this.route);
+        this.topologyLine && this.map.removeLayer(this.topologyLine);
+        this.setState({
+          options: [],
+          current: 'None'
+        });
+        return;
+      }
+
       var newFields = this.props.data.series[0].fields;
 
       if (newFields[1].values.buffer.length !== 0) {
@@ -17973,7 +17985,7 @@ function (_super) {
             color: 'yellow'
           }, {
             auto: true,
-            duration: 50 * routeData.length,
+            duration: 200 * routeData.length,
             // @ts-ignore
             easing: leaflet__WEBPACK_IMPORTED_MODULE_2___default.a.Motion.Ease.linear
           }, {

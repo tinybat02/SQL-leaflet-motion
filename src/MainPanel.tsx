@@ -35,8 +35,6 @@ export class MainPanel extends PureComponent<Props> {
   componentDidMount() {
     const { center_lat, center_lon, zoom_level, max_zoom, tile_url } = this.props.options;
 
-    const fields = this.props.data.series[0].fields as FieldBuffer[];
-
     const openStreetMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -54,20 +52,32 @@ export class MainPanel extends PureComponent<Props> {
       });
       this.map.addLayer(this.randomTile);
     }
-    if (fields[2].values.buffer.length !== 0) {
-      const { perUserRoute, perUserVendorName } = processReceivedData(this.props.data.series[0].length, fields);
+    if (this.props.data.series.length > 0) {
+      const fields = this.props.data.series[0].fields as FieldBuffer[];
+      if (fields[2].values.buffer.length !== 0) {
+        const { perUserRoute, perUserVendorName } = processReceivedData(this.props.data.series[0].length, fields);
 
-      this.perUserRoute = perUserRoute;
-      this.perUserVendorName = perUserVendorName;
-      console.log('route', this.perUserRoute);
-      this.setState({
-        options: Object.keys(this.perUserRoute),
-      });
+        this.perUserRoute = perUserRoute;
+        this.perUserVendorName = perUserVendorName;
+        this.setState({
+          options: Object.keys(this.perUserRoute),
+        });
+      }
     }
   }
 
   componentDidUpdate(prevProps: Props, prevState: State) {
     if (prevProps.data.series[0] !== this.props.data.series[0]) {
+      if (this.props.data.series.length == 0) {
+        this.route && this.map.removeLayer(this.route);
+        this.topologyLine && this.map.removeLayer(this.topologyLine);
+        this.setState({
+          options: [],
+          current: 'None',
+        });
+        return;
+      }
+
       const newFields = this.props.data.series[0].fields as FieldBuffer[];
 
       if (newFields[1].values.buffer.length !== 0) {
@@ -127,7 +137,7 @@ export class MainPanel extends PureComponent<Props> {
               },
               {
                 auto: true,
-                duration: 50 * routeData.length,
+                duration: 200 * routeData.length,
                 // @ts-ignore
                 easing: L.Motion.Ease.linear,
               },
