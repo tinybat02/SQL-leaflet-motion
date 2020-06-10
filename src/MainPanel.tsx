@@ -129,7 +129,7 @@ export class MainPanel extends PureComponent<Props> {
       if (this.state.current !== 'None') {
         const routeData = this.perUserRoute[this.state.current];
         console.log('current ', routeData);
-        if (routeData.length > 0) {
+        if (routeData.length > 1) {
           // @ts-ignore
           this.topologyLine = L.motion
             // @ts-ignore

@@ -17980,7 +17980,7 @@ function (_super) {
         var routeData = this.perUserRoute[this.state.current];
         console.log('current ', routeData);
 
-        if (routeData.length > 0) {
+        if (routeData.length > 1) {
           // @ts-ignore
           this.topologyLine = leaflet__WEBPACK_IMPORTED_MODULE_2___default.a.motion // @ts-ignore
           .polyline(routeData, {
