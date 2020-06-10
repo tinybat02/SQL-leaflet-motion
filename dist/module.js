@@ -17902,12 +17902,22 @@ function (_super) {
 
       if (fields[2].values.buffer.length !== 0) {
         var _b = Object(_util_helpFunc__WEBPACK_IMPORTED_MODULE_5__["processReceivedData"])(this.props.data.series[0].length, fields),
-            perUserRoute = _b.perUserRoute,
+            perUserRoute_1 = _b.perUserRoute,
             perUserVendorName = _b.perUserVendorName;
 
-        this.perUserRoute = perUserRoute;
+        console.log('before ', perUserRoute_1);
+        var only1Point = Object.keys(perUserRoute_1).filter(function (key) {
+          return perUserRoute_1[key].length == 1;
+        });
+        console.log('array 1 point ', only1Point);
+
+        for (var i = 0; i < only1Point.length; i++) {
+          delete perUserRoute_1[only1Point[i]];
+        }
+
+        console.log('after ', perUserRoute_1);
+        this.perUserRoute = perUserRoute_1;
         this.perUserVendorName = perUserVendorName;
-        console.log('motion ', this.perUserRoute);
         this.setState({
           options: Object.keys(this.perUserRoute)
         });
@@ -17931,10 +17941,18 @@ function (_super) {
 
       if (newFields[1].values.buffer.length !== 0) {
         var _a = Object(_util_helpFunc__WEBPACK_IMPORTED_MODULE_5__["processReceivedData"])(this.props.data.series[0].length, newFields),
-            perUserRoute = _a.perUserRoute,
+            perUserRoute_2 = _a.perUserRoute,
             perUserVendorName = _a.perUserVendorName;
 
-        this.perUserRoute = perUserRoute;
+        var only1Point = Object.keys(perUserRoute_2).filter(function (key) {
+          return perUserRoute_2[key].length == 1;
+        });
+
+        for (var i = 0; i < only1Point.length; i++) {
+          delete perUserRoute_2[only1Point[i]];
+        }
+
+        this.perUserRoute = perUserRoute_2;
         this.perUserVendorName = perUserVendorName;
         this.setState({
           options: Object.keys(this.perUserRoute)

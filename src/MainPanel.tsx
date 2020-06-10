@@ -57,10 +57,16 @@ export class MainPanel extends PureComponent<Props> {
       if (fields[2].values.buffer.length !== 0) {
         const { perUserRoute, perUserVendorName } = processReceivedData(this.props.data.series[0].length, fields);
 
+        console.log('before ', perUserRoute);
+        const only1Point = Object.keys(perUserRoute).filter(key => perUserRoute[key].length == 1);
+        console.log('array 1 point ', only1Point);
+        for (let i = 0; i < only1Point.length; i++) {
+          delete perUserRoute[only1Point[i]];
+        }
+        console.log('after ', perUserRoute);
         this.perUserRoute = perUserRoute;
         this.perUserVendorName = perUserVendorName;
 
-        console.log('motion ', this.perUserRoute);
         this.setState({
           options: Object.keys(this.perUserRoute),
         });
@@ -84,6 +90,11 @@ export class MainPanel extends PureComponent<Props> {
 
       if (newFields[1].values.buffer.length !== 0) {
         const { perUserRoute, perUserVendorName } = processReceivedData(this.props.data.series[0].length, newFields);
+
+        const only1Point = Object.keys(perUserRoute).filter(key => perUserRoute[key].length == 1);
+        for (let i = 0; i < only1Point.length; i++) {
+          delete perUserRoute[only1Point[i]];
+        }
 
         this.perUserRoute = perUserRoute;
         this.perUserVendorName = perUserVendorName;
