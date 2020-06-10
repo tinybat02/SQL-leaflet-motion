@@ -17907,6 +17907,7 @@ function (_super) {
 
         this.perUserRoute = perUserRoute;
         this.perUserVendorName = perUserVendorName;
+        console.log('motion ', this.perUserRoute);
         this.setState({
           options: Object.keys(this.perUserRoute)
         });
@@ -17977,6 +17978,7 @@ function (_super) {
 
       if (this.state.current !== 'None') {
         var routeData = this.perUserRoute[this.state.current];
+        console.log('current ', routeData);
 
         if (routeData.length > 0) {
           // @ts-ignore

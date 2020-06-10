@@ -59,6 +59,8 @@ export class MainPanel extends PureComponent<Props> {
 
         this.perUserRoute = perUserRoute;
         this.perUserVendorName = perUserVendorName;
+
+        console.log('motion ', this.perUserRoute);
         this.setState({
           options: Object.keys(this.perUserRoute),
         });
@@ -126,6 +128,7 @@ export class MainPanel extends PureComponent<Props> {
       this.topologyLine && this.map.removeLayer(this.topologyLine);
       if (this.state.current !== 'None') {
         const routeData = this.perUserRoute[this.state.current];
+        console.log('current ', routeData);
         if (routeData.length > 0) {
           // @ts-ignore
           this.topologyLine = L.motion
