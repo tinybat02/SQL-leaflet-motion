@@ -17906,6 +17906,7 @@ function (_super) {
             perUserVendorName = _b.perUserVendorName;
 
         console.log('before ', perUserRoute_1);
+        console.log('total key ', Object.keys(perUserRoute_1));
         var only1Point = Object.keys(perUserRoute_1).filter(function (key) {
           return perUserRoute_1[key].length == 1;
         });

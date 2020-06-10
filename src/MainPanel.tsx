@@ -58,6 +58,7 @@ export class MainPanel extends PureComponent<Props> {
         const { perUserRoute, perUserVendorName } = processReceivedData(this.props.data.series[0].length, fields);
 
         console.log('before ', perUserRoute);
+        console.log('total key ', Object.keys(perUserRoute));
         const only1Point = Object.keys(perUserRoute).filter(key => perUserRoute[key].length == 1);
         console.log('array 1 point ', only1Point);
         for (let i = 0; i < only1Point.length; i++) {
